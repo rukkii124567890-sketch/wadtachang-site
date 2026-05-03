@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ข่าวประชาสัมพันธ์</title>
+
+<style>
+body {font-family:Sarabun; background:#f5f7fa;}
+.container {max-width:1000px; margin:auto; padding:20px;}
+.news {background:white; padding:15px; margin:10px 0;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>ข่าวประชาสัมพันธ์</h1>
+<div id="news-list">กำลังโหลด...</div>
+</div>
+
+<script>
+async function loadNews() {
+    const repo = "YOUR_USERNAME/YOUR_REPO";
+    const res = await fetch(`https://api.github.com/repos/${repo}/contents/news`);
+    const files = await res.json();
+
+    let html = "";
+
+    for (let file of files.reverse()) {
+        let name = file.name.replace(".md","");
+        html += `<div class="news">📢 ${name}</div>`;
+    }
+
+    document.getElementById("news-list").innerHTML = html;
+}
+
+loadNews();
+</script>
+
+</body>
+</html>
